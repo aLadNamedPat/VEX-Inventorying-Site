@@ -1,0 +1,43 @@
+.container-fluid {
+    width: 100%; padding:0px 0px 0px 0px;
+}
+
+.sidebar {
+    background: rgb(12, 116, 177);
+    position: fixed;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 0;
+    transition: all 0.5s ease;
+}
+
+.navnav {
+    padding: 10px 30px 20px;
+}
+
+.givetoppad {
+    padding: 20px 0 0 0;
+}
+
+.sidebar-backgrounds {
+    background-color:antiquewhite;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}

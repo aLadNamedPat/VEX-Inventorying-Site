@@ -1,0 +1,204 @@
+{
+    "VRC Spin Up Full Field Element & Game Element Kit": [
+        {
+            "name" : "VRC Spin Up Full Field Element & Game Element Kit",
+            "price" : 549,
+            "count" : 1,
+            "SKU" : "276-7500",
+            "link" : "https://www.vexrobotics.com/276-7500.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-7500.png"
+        }
+    ],
+    "V5 Robot Battery Li-Ion 1100mAh" : [
+        {
+            "name" : "V5 Robot Battery Li-Ion 1100mAh",
+            "price" : 69.99,
+            "count" : 1,
+            "SKU" : "276-4811",
+            "link" : "https://www.vexrobotics.com/276-4811.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4811-000-v5-robot-battery_1.jpg"
+
+        }
+    ],
+    "Vision Sensor" : [
+        {
+            "name" : "Vision Sensor",
+            "price" : 79.99,
+            "count" : 1,
+            "SKU" : "276-4850",
+            "link" : "https://www.vexrobotics.com/276-4850.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4850-vision-sensor-front.jpg"
+
+        }
+    ],
+    "Inertial Sensor" : [
+        {
+            "name" : "Inertial Sensor",
+            "price" : 49.99,
+            "count" : 1,
+            "SKU" : "276-4855",
+            "link" : "https://www.vexrobotics.com/276-4855.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/e/3/e33a8364_1.jpg"
+        }
+    ],
+    "Distance Sensor" : [
+        {
+            "name" : "Distance Sensor",
+            "price" : 45.99,
+            "count" : 1,
+            "SKU" : "276-4852",
+            "link" : "https://www.vexrobotics.com/276-4852.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4852-_2_.jpg"
+        }
+    ],
+    "Optical Sensor" : [
+        {
+            "name" : "Optical Sensor",
+            "price" : 45.99,
+            "count" : 1,
+            "SKU" : "276-7043",
+            "link" : "https://www.vexrobotics.com/276-7043.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-7043.jpg"
+        }
+    ],
+    "V5 Robot Brain" : [
+        {
+            "name" : "V5 Robot Brain",
+            "price" : 349,
+            "count" : 1,
+            "SKU" : "276-4810",
+            "link" : "https://www.vexrobotics.com/276-4810.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4810-v5-robot-brain_home_1.jpg"
+        }
+    ],
+    "Rotation Sensor" :[
+        {
+            "name" : "Rotation Sensor",
+            "price" : 39.99,
+            "count" : 1,
+            "SKU" : "276-6050",
+            "link" : "https://www.vexrobotics.com/276-6050.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-6050-_7_.jpg"
+        }
+    ],
+    "V5 Controller" : [
+        {
+            "name" : "V5 Controller",
+            "price" : 124.99,
+            "count" : 1,
+            "SKU" : "276-4820",
+            "link" : "https://www.vexrobotics.com/276-4820.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4820-v5-controller_home.jpg"
+        }
+    ],
+    "V5 Robot Radio" : [
+        {
+            "name" : "V5 Controller",
+            "price" : 43.99,
+            "count" : 1,
+            "SKU" : "276-4831",
+            "link" : "https://www.vexrobotics.com/276-4831.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4831-100-v5-robot-radio-top_1.jpg"
+        }
+    ],
+    "Potentiometer V2" : [
+        {
+            "name" : "Potentiometer V2",
+            "price" : 14.49,
+            "count" : 2,
+            "SKU" : "276-7417",
+            "link" : "https://www.vexrobotics.com/276-7417.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/v/e/vex_v5_potentiometer_back_right_v01_05252021.jpg"
+        }
+    ],
+    "3-Wire Expander" : [
+        {
+            "name" : "3-Wire Expander",
+            "price" : 39.99,
+            "count" : 1,
+            "SKU" : "276-5299",
+            "link" : "https://www.vexrobotics.com/276-5299.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-5299-_2_.jpg"
+        }
+    ],
+    "V5 GPS Sensor" : [
+        {
+            "name" : "V5 GPS Sensor",
+            "price" : 199.99,
+            "count" : 1,
+            "SKU" : "276-7405",
+            "link" : "https://www.vexrobotics.com/276-7405.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/e/3/e33a7511.jpg"
+        }
+    ],
+    "Bumper Switch 6N" : [
+        {
+            "name" : "Bumper Switch 6N",
+            "price" : 14.49,
+            "count" : 2,
+            "SKU" : "276-8010",
+            "link" : "https://www.vexrobotics.com/276-8010.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-8010.jpg"
+        }  
+    ],
+    "VRC Spin Up Game Discs" : [
+        {
+            "name" : "VRC Spin Up Game Element Kit",
+            "price" : 149.99,
+            "count" : 60,
+            "SKU" : "276-7501",
+            "link" : "https://www.vexrobotics.com/276-7501.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-7501.jpg"
+        }
+    ],
+    "6P Sprockets" : [
+        {
+            "name" : "8T Sprocket, 6P",
+            "price" : 19.99,
+            "count" : 8,
+            "SKU" : "276-8030",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/7/276-8030_1.jpg"
+        },
+        {
+            "name" : "16T Sprocket, 6P",
+            "price" : 24.99,
+            "count" : 8,
+            "SKU" : "276-8328",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/7/276-8328.jpg"           
+        },
+        {
+            "name" : "24T Sprocket, 6P",
+            "price" : 24.99,
+            "count" : 8,
+            "SKU" : "276-8329",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/7/276-8329.jpg"
+        },
+        {
+            "name" : "32T Sprocket, 6P",
+            "price" : 24.99,
+            "count" : 8,
+            "SKU" : "276-8330",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/7/276-8330.jpg"
+        },
+        {
+            "name" : "40T Sprocket, 6P",
+            "price" : 24.99,
+            "count" : 8,
+            "SKU" : "276-8331",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/7/276-8331.jpg"
+        },
+        {
+            "name" : "Chain",
+            "price" : 19.99,
+            "count" : 200,
+            "SKU" : "228-4983",
+            "link" : "https://www.vexrobotics.com/6p-sprockets.html",
+            "image" : "https://www.vexrobotics.com/media/catalog/product/cache/fa9a1d324ff277b0a3724afc40c455f6/2/2/228-4983_1.jpg"
+        }
+    ]
+}
