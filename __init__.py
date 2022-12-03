@@ -6,13 +6,14 @@ import os
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-
 def create_app():
     app = Flask(__name__, static_url_path='/static')
-
+    #new mysql db
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:aPat0203@localhost/flasksql'
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['SECRET_KEY'] = os.urandom(12).hex()
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-
+    #old sqlite db
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     db.init_app(app)
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -31,5 +32,6 @@ def create_app():
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-
+    # with app.app_context():
+    #     db.create_all()
     return app

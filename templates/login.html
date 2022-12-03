@@ -46,6 +46,13 @@
                                     </div>
                                 </div>
                             </div>
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <div class="notification is-danger alert alert-danger">
+                                {{ messages[0] }}
+                            </div>
+                            {% endif %}
+                            {% endwith %}
                             <div class="mt-4 pt-2">
                                 <input class="btn btn-primary btn-lg" type="submit" value="Login" />
                             </div>

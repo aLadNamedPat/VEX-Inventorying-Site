@@ -1,7 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-    Welcome, {{ name }}!
-</h1>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-12">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-2 p-md-5">
+                        <h3 class="title">
+                            Hi {{ name }}! Welcome to the VEX Inventorying site! This is the site to solve all your VEX sorting needs! Have your coach register for a general account, so that you may start a shared inventory with all your organization's teams (That could just be your team)!
+                        </h3>>
+                        <div>
+                            {% if not current_user.confirmedRequests %}
+                            <form method="POST" action="/profile">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name = "CoachEmailRequest" id="CoachEmailRequest" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <label for="CoachEmailRequest">Coach's Email Address</label>
+                                </div>
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                <div class="notification is-danger alert alert-danger">
+                                    {{ messages[0] }}
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                            {% endif %}
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
