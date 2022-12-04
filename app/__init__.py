@@ -2,9 +2,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
+import pyodbc
 # init SQLAlchemy so we can use it later in our models
+
 db = SQLAlchemy()
 login_manager = LoginManager()
+
 
 def create_app():
     app = Flask(__name__, static_url_path='/static')
