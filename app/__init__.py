@@ -7,12 +7,6 @@ import pyodbc
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
-    dbuser=os.environ['DBUSER'],
-    dbpass=os.environ['DBPASS'],
-    dbhost=os.environ['DBHOST'] + ".postgres.database.azure.com",
-    dbname=os.environ['DBNAME']
-)
 
 def create_app():
     app = Flask(__name__, static_url_path='/static')
