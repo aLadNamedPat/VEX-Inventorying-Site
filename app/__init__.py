@@ -7,12 +7,17 @@ import pyodbc
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-
+DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
+    dbuser=os.environ['DBUSER'],
+    dbpass=os.environ['DBPASS'],
+    dbhost=os.environ['DBHOST'] + ".postgres.database.azure.com",
+    dbname=os.environ['DBNAME']
+)
 
 def create_app():
     app = Flask(__name__, static_url_path='/static')
     #new mysql db
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:aPat0203@localhost/flasksql'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['SECRET_KEY'] = os.urandom(12).hex()
     #old sqlite db
