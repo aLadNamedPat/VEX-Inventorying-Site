@@ -17,7 +17,7 @@ DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.forma
 def create_app():
     app = Flask(__name__, static_url_path='/static')
     #new mysql db
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://aPat0203:P7heVUcnr$81hG@vexinventoryserver.postgres.database.azure.com/postgres?sslmode=require'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['SECRET_KEY'] = os.urandom(12).hex()
     #old sqlite db
@@ -40,6 +40,6 @@ def create_app():
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-    # with app.app_context():
-    #     db.create_all()
+    with app.app_context():
+        db.create_all()
     return app
