@@ -19,7 +19,6 @@ dataVal = [
             "SKU" : "276-4811",
             "link" : "https://www.vexrobotics.com/276-4811.html",
             "image" : "https://www.vexrobotics.com/media/catalog/product/cache/d64bdfbef0647162ce6500508a887a85/2/7/276-4811-000-v5-robot-battery_1.jpg"
-
         },
         {
             "name" : "Vision Sensor",
@@ -239,7 +238,7 @@ def profile_post():
             flash('Request already sent. Please wait for a response')
             return redirect(url_for("main.profile"))
         else:
-            user.received_requests[current_user.savedEmail] = current_user.savedEmail
+            user.received_requests[current_user.savedEmail] = False
             current_user.received_requests[user.savedEmail] = False
             print(user.received_requests)
             print(current_user.received_requests)
@@ -252,21 +251,116 @@ def profile_post():
             print(current_user)
             print(current_user.received_requests)
             print("5")
-            assert user.received_requests[current_user.savedEmail] == current_user.savedEmail
+            assert user.received_requests[current_user.savedEmail] == False
             flash('Request sent successfully, please wait for a response.')
             return redirect(url_for("main.profile"))
 
 @main.route('/teams')
 @login_required(role="coach")
 def teams():
-    savedTeams = []
+    current_requests = []
+    fufilled_requests = []
     for memberEmail in current_user.received_requests.keys():
-        savedTeams.append(User.query.filter_by(savedEmail = memberEmail).first())
-        print(memberEmail)
-        print(User.query.filter_by(savedEmail = memberEmail))
-    return render_template("teams.html", unresponded_requests = savedTeams, accepted = current_user.teams)
+        if not current_user.received_requests.get(memberEmail):
+            current_requests.append(User.query.filter_by(savedEmail = memberEmail).first())
+        else:
+            fufilled_requests.append(User.query.filter_by(savedEmail = memberEmail).first())
+        # print(memberEmail)
+        # print(User.query.filter_by(savedEmail = memberEmail))
+    return render_template("teams.html", name = current_user.name, unresponded_requests = current_requests, accepted = fufilled_requests)
 
 @main.route('/teams', methods=['POST'])
 @login_required(role="coach")
-def teams_post():
-    pass
+def teams_Post():
+    current_requests = []
+    fufilled_requests = []
+    print(list(request.form.keys())[0])
+    if "Add Team" == request.form[list(request.form.keys())[0]]:
+        current_user.received_requests[list(request.form.keys())[0][:-1]] = True
+        user = User.query.filter_by(savedEmail=list(request.form.keys())[0][:-1]).first()
+        user.received_requests[current_user.savedEmail] = True
+        user.confirmedRequests = True
+        
+    if "Reject Team" == request.form[list(request.form.keys())[0]]:
+        current_user.received_requests.pop(list(request.form.keys())[0][:-1])
+        user = User.query.filter_by(savedEmail=list(request.form.keys())[0][:-1]).first()
+        user.received_requests.pop(current_user.savedEmail)
+    
+    if "Remove Team" == request.form[list(request.form.keys())[0]]:
+        current_user.received_requests.pop(list(request.form.keys())[0][:-1])
+        user = User.query.filter_by(savedEmail=list(request.form.keys())[0][:-1]).first()
+        user.received_requests.pop(current_user.savedEmail)
+        user.confirmedRequests = False
+
+    db.session.add(current_user)
+    db.session.add(user)
+    db.session.commit()
+    
+    for memberEmail in current_user.received_requests.keys():
+        if not current_user.received_requests.get(memberEmail):
+            current_requests.append(User.query.filter_by(savedEmail = memberEmail).first())
+        else:
+            fufilled_requests.append(User.query.filter_by(savedEmail = memberEmail).first())
+        # print(memberEmail)
+        # print(User.query.filter_by(savedEmail = memberEmail))
+    return render_template("teams.html", name = current_user.name, unresponded_requests = current_requests, accepted = fufilled_requests)
+
+@main.route('/inventory')
+@login_required(role="ANY")
+def inventory():
+    invItems = []
+    if (current_user.urole == "coach"):
+        for name in current_user.inventory.keys():
+            invItems.append(current_user.inventory[name])
+
+    elif (current_user.urole == "student" and current_user.confirmedRequests):
+        for coachEmail in current_user.received_requests.keys():
+            if current_user.received_requests[coachEmail]:
+                user = User.query.filter_by(savedEmail=coachEmail).first()
+                for name in user.inventory.keys():
+                    invItems.append(user.inventory[name])
+    return render_template("inventory.html", all_items = dataVal, inventory = invItems)
+
+@main.route('/inventory', methods=['POST'])
+@login_required(role="ANY")
+def inventory_post():
+    invItems = []
+    itemName = request.form.get('selectItemName')
+    itemNumber = int(request.form.get('amountInserted'))
+    count = 0
+    for item in dataVal:
+        if item["name"] and item["name"] == itemName:
+            itemSKU = item["SKU"]
+        if item["SKU"] == itemName:
+            itemSKU = itemName
+            itemName = item["name"]
+    if (current_user.urole == "coach"):
+        if itemName in current_user.inventory:
+            count = current_user.inventory[itemName]["Count"]
+        count += itemNumber
+        current_user.inventory[itemName] = {
+            "Name": itemName,
+            "SKU" : itemSKU,
+            "Count" : count
+        }
+        for name in current_user.inventory.keys():
+            invItems.append(current_user.inventory[name])
+
+    elif (current_user.urole == "student" and current_user.confirmedRequests):
+        for coachEmail in current_user.received_requests.keys():
+            if current_user.received_requests[coachEmail]:
+                user = User.query.filter_by(savedEmail=coachEmail).first()
+                if itemName in user.inventory:
+                    count = user.inventory[itemName]["Count"]
+                count += itemNumber
+                user.inventory[itemName] = {
+                    "Name": itemName,
+                    "SKU" : itemSKU,
+                    "Count" : count
+                }
+                for name in user.inventory.keys():
+                    invItems.append(user.inventory[name])
+
+    db.session.add(current_user)
+    db.session.commit()
+    return render_template("inventory.html", all_items = dataVal, inventory = invItems)

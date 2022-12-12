@@ -1,6 +1,37 @@
 {% extends "base.html" %} 
 
 {% block content %}
+<div class="container">
+    <h2>Simple Pagination Example using Datatables Js Library</h2>
+    <table class="table table-fluid" id="myTable">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Item Name</th>
+                <th>SKU</th>
+                <th>Count Per Purchase</th>
+                <th>Link to Product</th>
+                <!-- <th>Buy More</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td><img class="img-thumbnail" src = {{ item.image }} alt = {{ item.name }} /></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.SKU }}</td>
+                <td>{{ item.count }}</td>
+                <td>{{ item.link }} </td>
+                <!-- <td> 
+                    <input class="btn btn-primary btn-lg" type="submit" value="Add" /> 
+                </td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- 
+
 <section class="vh-100">
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
@@ -58,5 +89,5 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 {% endblock %}

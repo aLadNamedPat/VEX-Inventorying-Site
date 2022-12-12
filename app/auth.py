@@ -16,7 +16,7 @@ def login():
 @auth.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
     role = request.form['role']
     remember = True if request.form.get('remember') else False
@@ -46,14 +46,13 @@ def signup():
 @auth.route('/signup', methods=['POST'])
 def signup_post():
     # code to validate and add user to database goes here
-    userEmail = request.form.get('email')
+    userEmail = request.form.get('email').lower()
     print(userEmail)
     name = request.form.get('teamName')
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
     role = request.form['role']
     inventoryVal = {}
-    teams = {}
     requestsReceived = {}
     teammates = {}
     if role:
@@ -66,7 +65,6 @@ def signup_post():
         print(person.password)
         print(person.savedEmail)
         print(person.urole)
-        print(person.teams)
 
     if user:  # if a user is found, we want to redirect back to signup page so user can try again
         flash('Email address already exists')
@@ -82,7 +80,6 @@ def signup_post():
                             password, method='sha256'),
                         urole=role, 
                         inventory=inventoryVal, 
-                        teams=teams, 
                         received_requests=requestsReceived,
                         team_mates=teammates
                         )
@@ -103,4 +100,4 @@ def signup_post():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('auth.login'))

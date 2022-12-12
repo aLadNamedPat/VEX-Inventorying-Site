@@ -1,35 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
+<h3 class="title">
+    Hi {{ name }}! This is the page used to store requests to join your team and for you to view what subteams are under you.
+</h3>
+
+
 <section class="vh-100">
+    <h4 class="title">
+        Here are some current requests to join your team!
+    </h4>
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-12">
                 <div class = "vstack gap-3">
                     {% for team in unresponded_requests %}
-                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                        <div class="card-body p-2 p-md-5">   
-                            {{ team.name }}
-                            {{ team.savedEmail }}
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <form method="POST" action="/teams">
+                            <div class="card-body p-2 p-md-5">   
+                                {{ team.name }}
+                                {{ team.savedEmail }}
+                            </div>
+                            <div>
+                                <div class="mt-1">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="Add Team" name ={{ team.savedEmail }}/>
+                                </div>
+                                <div class ="mt-2">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="Reject Team" name = {{ team.savedEmail }}/>
+                                </div>
+                            </div>
+                        </form>
                         </div>
-                    </div>
-                    <form method="POST" action="/signup">
-                        <input class="btn btn-primary btn-lg" type="submit" value="addPerson" />
-                    </form>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+</section>
+<section class="vh-100">
+    <h4 class="title">
+        Here are some of your current teams!
+    </h4>
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-12">
                 <div class = "vstack gap-3">
                     {% for team in accepted %}
-                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <form method="POST" action="/teams">
                         <div class="card-body p-2 p-md-5">   
-                            {{ team.name }}          
+                            {{ team.name }}
+                            {{ team.savedEmail }}
                         </div>
-                    </div>
+                        <div>
+                            <div class ="mt-2">
+                                <input class="btn btn-primary btn-sm" type="submit" value="Remove Team" name = {{ team.savedEmail }}/>
+                            </div>
+                        </div>
+                    </form>
                     {% endfor %}
                 </div>
             </div>
@@ -37,4 +63,23 @@
     </div>
 </section>
 
+<!-- <script>
+    function deleteTeam(teamEmail) {
+        fetch("/deleteTeam", {
+        method: "POST",
+        body: JSON.stringify({ teamEmail: teamEmail }),
+        }).then((_res) => {
+        window.location.href = "/";
+        })
+    };
+    function addTeam(teamEmail) {
+        fetch("/addTeam", {
+        method: "POST",
+        body: JSON.stringify({ teamEmail: teamEmail }),
+        }).then((_res) => {
+        window.location.href = "/";
+        })
+    }
+</script> -->
 {% endblock %}
+
