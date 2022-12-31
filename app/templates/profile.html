@@ -8,8 +8,11 @@
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-2 p-md-5">
                         <h3 class="title">
-                            Hi {{ name }}! Welcome to the VEX Inventorying site! This is the site to solve all your VEX sorting needs! Have your coach register for a general account, so that you may start a shared inventory with all your organization's teams (That could just be your team)!
-                        </h3>>
+                            Welcome to the VEX Inventorying site {{ name }}!
+                        </h3>
+                        <h5>
+                            This is the site to solve all your VEX sorting needs! Have your coach register for a general account, so that you may start a shared inventory with all your organization's teams (That could just be your team)!
+                        </h5>
                         <div>
                             {% if not current_user.confirmedRequests %}
                             <form method="POST" action="/profile">

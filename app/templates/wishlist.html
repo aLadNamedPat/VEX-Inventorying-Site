@@ -57,15 +57,15 @@
                 <td>{{ item.Team }}</td>
                 <td>{{ item.Price }}</td>
                 {% if item.Status == "Requested" %}
-                <td><button type="button" class="btn btn-primary btn-md disabled">{{ item.Status }}</button></td>>
+                <td><button type="button" class="btn btn-primary btn-md disabled">{{ item.Status }}</button></td>
                 {% elif item.Status == "Ordered" %}
-                <td><button type="button" class="btn btn-info btn-md disabled">{{ item.Status }}</button></td>>
+                <td><button type="button" class="btn btn-info btn-md disabled">{{ item.Status }}</button></td>
                 {% elif item.Status == "Declined" %}
-                <td><button type="button" class="btn btn-danger btn-md disabled">{{ item.Status }}</button></td>>
+                <td><button type="button" class="btn btn-danger btn-md disabled">{{ item.Status }}</button></td>
                 {% elif item.Status == "Cancelled" %}
-                <td><button type="button" class="btn btn-warning btn-md disabled">{{ item.Status }}</button></td>>
+                <td><button type="button" class="btn btn-warning btn-md disabled">{{ item.Status }}</button></td>
                 {% elif item.Status == "Fulfiled" %}
-                <td><button type="button" class="btn btn-success btn-md disabled">{{ item.Status }}</button></td>>
+                <td><button type="button" class="btn btn-success btn-md disabled">{{ item.Status }}</button></td>
                 {% else %}
                 <td></td>
                 {% endif %}

@@ -64,7 +64,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">VEX SITE</a>
         <span class="navbar-text">
-            {{ current_user.urole }} {{ current_user.email }}
+            Account role: {{ current_user.urole }} | Email: {{ current_user.email }}
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
-
+                {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="/">About <span class="sr-only">(current)</span></a>
                 </li>
+                {% endif %}
                 {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="/signup">Sign up <span class="sr-only">(current)</span></a>

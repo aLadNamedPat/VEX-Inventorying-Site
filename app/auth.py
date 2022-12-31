@@ -35,7 +35,7 @@ def login_post():
     if role == "student":
         return redirect(url_for('main.profile'))
     else:
-        return redirect(url_for('main.about'))
+        return redirect(url_for('main.items'))
 
 
 @auth.route('/signup')
@@ -93,7 +93,7 @@ def signup_post():
         if role == "student":
             return redirect(url_for('main.profile'))
         else:
-            return redirect(url_for('main.about'))
+            return redirect(url_for('main.items'))
     flash("Passwords don't match!")
     return redirect(url_for('auth.signup'))
 
