@@ -55,6 +55,7 @@ def signup_post():
     inventoryVal = {}
     requestsReceived = {}
     teammates = {}
+    wishlistRequests = {}
     if role:
         print(role)
         print(type(role))
@@ -74,14 +75,15 @@ def signup_post():
         # create a new user with the form data. Hash the password so the plaintext version isn't saved.
         new_user = User(
                         email=userEmail, 
-                        savedEmail =userEmail,
+                        savedEmail=userEmail,
                         name=name,
                         password=generate_password_hash(
                             password, method='sha256'),
                         urole=role, 
-                        inventory=inventoryVal, 
+                        inventory=inventoryVal,
+                        wishlist_requests=wishlistRequests,
                         received_requests=requestsReceived,
-                        team_mates=teammates
+                        team_mates=teammates           
                         )
 
         # add the new user to the database

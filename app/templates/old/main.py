@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, flash, url_for, json
+from flask import Blueprint, render_template, redirect, request, flash, url_for
 from flask_login import login_required, current_user, logout_user
 from functools import wraps
 from .models import User
@@ -307,164 +307,32 @@ def teams_Post():
 def inventory():
     modify_form = InvModifyForm()
     invItems = []
-    teamsDict = {}
     if (current_user.urole == "coach"):
         for name in current_user.inventory.keys():
-            teamsDict = {}
-            teams = current_user.inventory[name].get("Teams")
-            
-            if teams:
-                for team in teams:
-                    nameAndCount = team.split("|")
-                    teamsDict[nameAndCount[0].strip()] = nameAndCount[1]
-            current_user.inventory[name]["teamsDict"] = teamsDict
             invItems.append(current_user.inventory[name])
+
     elif (current_user.urole == "student" and current_user.confirmedRequests):
         for coachEmail in current_user.received_requests.keys():
             if current_user.received_requests[coachEmail]:
                 user = User.query.filter_by(savedEmail=coachEmail).first()
                 for name in user.inventory.keys():
-                    user.inventory[name]["teamsDict"] = teamsDict
                     invItems.append(user.inventory[name])
     return render_template("inventory.html", all_items = dataVal, inventory = invItems, modify_form=modify_form)
 
 @main.route('/inventory', methods=['POST'])
 @login_required(role="ANY")
-def inventory_post():  
-    if (current_user.urole == "student" and current_user.confirmedRequests):     
-        modifyForm = InvModifyForm()
-        itemName = request.form.get("managed_item")
-        formTeams = request.form.get("teams")
-        availCount = int(request.form.get("availCount"))
-        count = request.form.get("count")
-        itemNumber = int(request.form.get("itemNumber"))
-        for item in dataVal:
-            if item["name"] and item["name"] == itemName:
-                itemSKU = item["SKU"]
-        coachEmail = ""
-        for email in current_user.received_requests.keys():
-            if email != current_user.email:
-                coachEmail = email
-        user = User.query.filter_by(email=coachEmail).first()
-        displayTeam = ""
-        if modifyForm.checkoutSubmit.data:
-            if itemNumber > int(availCount) or int(availCount) == 0:
-                flash(f"Not enough items available! Adjust your request number.", category='danger')
-                return redirect(url_for('main.inventory'))
-            else:
-                teams = []    
-                if user.inventory[itemName].get("Teams") == None:
-                    myTeam = current_user.name + "|" + str(itemNumber)
-                    teams = [myTeam]
-                    availCount -= itemNumber
-                    displayTeam = (current_user.name  + ": " + str(itemNumber) + "\n")
-                else:
-                    teams = user.inventory[itemName]["Teams"]               
-                    currentTeamCount = 0
-                    currentTeamPos = 0
-                    for t in teams:
-                        teamList = t.split("|")
-                        currentTeamPos += 1
-                        if teamList[0] == current_user.name:
-                            currentTeamCount = teamList[1]
-                            break
-                    if int(currentTeamCount) > 0:
-                        myTeam = current_user.name + "|" + str(itemNumber + int(currentTeamCount))
-                        teams[currentTeamPos-1] = myTeam
-                    else:
-                        myTeam = current_user.name + "|" + str(itemNumber)
-                        teams.append(myTeam)
-                    availCount = availCount - itemNumber
-                    displayTeam = ""
-                    for t in teams:
-                        teamList = t.split("|")
-                        displayTeam += (teamList[0] + ": " + teamList[1] + "\n")
-        if modifyForm.returnSubmit.data:
-            if formTeams == None:
-                flash(f"Your team do not have this item, cannot return!", category='danger')
-                return redirect(url_for('main.inventory'))
-            else:
-                myTeamList = formTeams.replace("[","").replace("]","").replace("'", "").split(",")
-                teamHasItem = False
-                teamItemCount = 0
-                teamPos = 0
-                print(myTeamList)
-                for t in myTeamList:
-                    teamAndCount = t.split("|")
-                    teamPos += 1
-                    print(teamAndCount[0])
-                    print(current_user.name)
-                    if teamAndCount[0].strip() == current_user.name:
-                        teamHasItem = True
-                        teamItemCount = teamAndCount[1]
-                        break
-                if teamHasItem == False:
-                    flash(f"Your team does not have this item, cannot return!", category='danger')
-                    return redirect(url_for('main.inventory'))
-                elif int(teamItemCount) < itemNumber:
-                    flash(f"Your team has less items then your input, cannot return!", category='danger')
-                    return redirect(url_for('main.inventory'))
-                else:
-                    teams = user.inventory[itemName]["Teams"]
-                    myTeam = current_user.name + "|" + str(int(teamItemCount) - itemNumber)
-                    teams[teamPos-1] = myTeam
-                    availCount = availCount + itemNumber
-                    #displayTeam = ""
-                    for t in teams:
-                        teamList = t.split("|")
-                        displayTeam += (teamList[0] + ": " + teamList[1] + "\n")
-                    
-        user.inventory[itemName] = {
-            "Name": itemName,
-            "SKU" : itemSKU,
-            "Count" : count,
-            "AvailCount": availCount,
-            "Teams":teams,
-            "DisplayTeams":displayTeam
-        }
-    elif (current_user.urole == "coach"):
-        modifyForm = InvModifyForm()
-        if modifyForm.updateSubmit.data:
-            teams = []
-            displayTeam = ""
-            teamTotal = 0
-            count = request.form.get('count')
-            itemName = request.form.get("managed_item")
-            for formKey in request.form.keys():
-                if "TEAM|" in formKey:
-                    fakeNameList = formKey.split("|")
-                    teams.append(fakeNameList[1] + "|" + request.form[formKey])
-                    displayTeam += (fakeNameList[1]+ ": " + request.form[formKey] + "\n")
-                    teamTotal += int(request.form[formKey])
-                else:
-                    continue
-            availCount = int(count) - teamTotal
-            if availCount < 0:
-                flash(f"Your team total cannot be greater than your inventory total!", category='danger')
-                return redirect(url_for('main.inventory'))
-            current_user.inventory[itemName]["Count"] = count
-            current_user.inventory[itemName]["Teams"] = teams
-            current_user.inventory[itemName]["DisplayTeams"] = displayTeam
-            current_user.inventory[itemName]["AvailCount"] = availCount
-            db.session.add(current_user)
-            db.session.commit()
-            return redirect(url_for('main.inventory'))
-        if modifyForm.deleteSubmit.data:
-            itemName = request.form.get("managed_item")
-            del current_user.inventory[itemName]
-            db.session.add(current_user)
-            db.session.commit()
-            return redirect(url_for('main.inventory'))
-        invItems = []
-        itemName = request.form.get('selectItemName')
-        itemNumber = int(request.form.get('amountInserted'))
-        for item in dataVal:
-            if item["name"] and item["name"] == itemName:
-                itemSKU = item["SKU"]
-            if item["SKU"] == itemName:
-                itemSKU = itemName
-                itemName = item["name"]
-        count = 0
+def inventory_post():
+    invItems = []
+    itemName = request.form.get('selectItemName')
+    itemNumber = int(request.form.get('amountInserted'))
+    count = 0
+    for item in dataVal:
+        if item["name"] and item["name"] == itemName:
+            itemSKU = item["SKU"]
+        if item["SKU"] == itemName:
+            itemSKU = itemName
+            itemName = item["name"]
+    if (current_user.urole == "coach"):
         if itemName in current_user.inventory:
             count = current_user.inventory[itemName]["Count"]
         count += itemNumber
@@ -477,6 +345,55 @@ def inventory_post():
         for name in current_user.inventory.keys():
             invItems.append(current_user.inventory[name])
 
+    elif (current_user.urole == "student" and current_user.confirmedRequests):
+        coachEmail = ""
+        for email in current_user.received_requests.keys():
+            if email != current_user.email:
+                coachEmail = email
+        user = User.query.filter_by(email=coachEmail).first()
+        #if itemName in user.inventory:
+        count = user.inventory[itemName]["Count"]
+        availCount = count
+        if user.inventory[itemName].get("AvailCount"):
+            availCount = user.inventory[itemName]["AvailCount"]
+        if itemNumber > int(availCount):
+            flash(f"Not enough items available! Adjust your request number.", category='danger')
+        else:
+            teams = []    
+            if user.inventory[itemName].get("Teams") == None:
+                myTeam = current_user.name + "|" + str(itemNumber)
+                teams = [myTeam]
+            else:
+                teams = user.inventory[itemName]["Teams"]               
+                currentTeamCount = 0
+                currentTeamPos = 0
+                for t in teams:
+                    teamList = t.split("|")
+                    currentTeamPos += 1
+                    if teamList[0] == current_user.name:
+                        currentTeamCount = teamList[1]
+                        break
+                if int(currentTeamCount) > 0:
+                    myTeam = current_user.name + "|" + str(itemNumber + int(currentTeamCount))
+                    teams[currentTeamPos-1] = myTeam
+                else:
+                    myTeam = current_user.name + "|" + str(itemNumber)
+                    teams.append(myTeam)
+            availCount = availCount - itemNumber
+            displayTeam = ""
+            for t in teams:
+                teamList = t.split("|")
+                displayTeam += (teamList[0] + ": " + teamList[1] + "\n")
+            user.inventory[itemName] = {
+                "Name": itemName,
+                "SKU" : itemSKU,
+                "Count" : count,
+                "AvailCount": availCount,
+                "Teams":teams,
+                "DisplayTeams":displayTeam
+            }
+                #for name in user.inventory.keys():
+                #    invItems.append(user.inventory[name])
     db.session.add(current_user)
     db.session.commit()
     #return render_template("inventory.html", all_items = dataVal, inventory = invItems)
@@ -588,6 +505,7 @@ def wishlist_post():
         }
         for name in current_user.wishlist_requests.keys():
             invItems.append(current_user.wishlist_requests[name])
+
     elif (current_user.urole == "student" and current_user.confirmedRequests):
         invItems = []
         print("student after urole")
@@ -595,29 +513,29 @@ def wishlist_post():
         for userEmail in current_user.received_requests.keys():
             if userEmail != current_user.email:
                 coachEmail = userEmail
-                break          
-        user = User.query.filter_by(email=current_user.email).first()
-        if user.wishlist_requests == None:
-            print("wishlist_request is none")
-            user.wishlist_requests={}
-        if itemName in user.wishlist_requests:
-            count = user.wishlist_requests[itemName]["Count"]
-            print(count)
-        count += itemNumber
-        if current_user.email == user.email:
-            teamName = user.name               
-            user.wishlist_requests[itemName] = {
-                "Name": itemName,
-                "SKU" : itemSKU,
-                "Count": count,
-                "Price": price,
-                "Team": teamName,
-                "Status": "Requested",
-                "Requestor": current_user.email
-            }
-        print("after continue")        
-        for name in user.wishlist_requests.keys():
-            invItems.append(user.wishlist_requests[name])
+            if userEmail != current_user.email:
+                continue
+            user = User.query.filter_by(email=userEmail).first()
+            if user.wishlist_requests == None:
+                continue
+            if itemName in user.wishlist_requests:
+                count = user.wishlist_requests[itemName]["Count"]
+            count += itemNumber
+            if current_user.email == user.email:
+                teamName = user.name               
+                user.wishlist_requests[itemName] = {
+                    "Name": itemName,
+                    "SKU" : itemSKU,
+                    "Count": count,
+                    "Price": price,
+                    "Team": teamName,
+                    "Status": "Requested",
+                    "Requestor": current_user.email
+                }
+            print("after continue")
+            for name in user.wishlist_requests.keys():
+                #invItems.append(user.wishlist_requests[name])
+                invItems.append(user.wishlist_requests[name])
         # we now need to reflect the request in coach's wishlist
         print(coachEmail)
         coach = User.query.filter_by(savedEmail=coachEmail).first()
@@ -644,41 +562,10 @@ def wishlist():
         for name in current_user.wishlist_requests.keys():
             invItems.append(current_user.wishlist_requests[name])
     elif (current_user.urole == "student" and current_user.confirmedRequests):
-        #for studentEmail in current_user.received_requests.keys():
+        for studentEmail in current_user.received_requests.keys():
             #if current_user.received_requests[coachEmail]:
-            #user = User.query.filter_by(savedEmail=studentEmail).first()
-        for name in current_user.wishlist_requests.keys():
-            invItems.append(current_user.wishlist_requests[name])
+            user = User.query.filter_by(savedEmail=studentEmail).first()
+            if current_user.email == user.email:
+                for name in user.wishlist_requests.keys():
+                    invItems.append(user.wishlist_requests[name])
     return render_template("wishlist.html", all_items = dataVal, wishlist_requests = invItems, manage_form = manage_form) 
-
-@main.route('/teamInventory')
-@login_required(role="ANY")
-def teamInventory():
-    invItems = []
-    if (current_user.urole == "student" and current_user.confirmedRequests):
-        for coachEmail in current_user.received_requests.keys():
-            if current_user.received_requests[coachEmail]:
-                user = User.query.filter_by(savedEmail=coachEmail).first()
-                for name in user.inventory.keys():
-                    teams = []    
-                    if user.inventory[name].get("Teams") == None:
-                        currentTeamCount = 0
-                    else:
-                        teams = user.inventory[name]["Teams"]            
-                        currentTeamCount = 0
-                        for t in teams:
-                            teamList = t.split("|")
-                            if teamList[0] == current_user.name:
-                                currentTeamCount = teamList[1]
-                                break
-                    if int(currentTeamCount) > 0:
-                        teamInvItem= {
-                            "Name": name,
-                            "SKU" : user.inventory[name]["SKU"],
-                            "Count" : user.inventory[name]["Count"],
-                            "AvailCount": user.inventory[name]["AvailCount"],
-                            "TeamItemCount":currentTeamCount
-                        }
-                        invItems.append(teamInvItem)
-    return render_template("teamInventory.html", inventory = invItems)
-    

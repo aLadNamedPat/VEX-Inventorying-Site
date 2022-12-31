@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+
+{% block content %}
+<style>
+    pre{
+        display: block;
+        font-family: serif;
+        font-size: 16px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+}
+</style>
+<div class="container pt-3">
+    <div class="card shadow-2-strong card-registration" style="border-radius: 15px; background-color:#eeeeee" >
+    <div class="card-header d-flex justify-content-center"><h2 class="title justify-content-center">Team Inventory</h2></div>
+    <table class="table table-striped" id="myTable">
+        <thead>
+            <tr style="background-color:#bbdefb">
+                <th>Item Name</th>
+                <th>SKU</th>
+                <th>Total Count:</th>
+                <th>Available Count:</th>
+                <th>Team Checkout Count:</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+            <tr>
+                <td>{{ item.Name }}</td>
+                <td>{{ item.SKU }}</td>
+                <td>{{ item.Count }}</td>
+                <td>{{ item.AvailCount }}</td>
+                <td><pre><h6>{{ item.TeamItemCount }}</h6></pre></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

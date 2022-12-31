@@ -1,67 +1,90 @@
 {% extends "base.html" %}
 {% block content %}
-<h3 class="title">
+<!--h3 class="title">
     Hi {{ name }}! This is the page used to store requests to join your team and for you to view what subteams are under you.
-</h3>
-
-
-<section class="vh-100">
-    <h4 class="title">
-        Here are some current requests to join your team!
-    </h4>
-    <div class="container py-5 h-100">
-        <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-9 col-xl-12">
-                <div class = "vstack gap-3">
-                    {% for team in unresponded_requests %}
-                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                        <form method="POST" action="/teams">
-                            <div class="card-body p-2 p-md-5">   
-                                {{ team.name }}
-                                {{ team.savedEmail }}
-                            </div>
-                            <div>
-                                <div class="mt-1">
-                                    <input class="btn btn-primary btn-sm" type="submit" value="Add Team" name ={{ team.savedEmail }}/>
+</h3-->
+<session><div class="container py-10 h-100">
+    <div class="row justify-content-center align-items-center h-100 pt-4">
+        <div class="col d-flex justify-content-center">
+            <div class="card shadow-2-strong card-registration" style="border-radius: 15px; width:max-content;">
+                <div class="card-header d-flex justify-content-center">
+                    <h2 class="title justify-content-center">Team management</h2></div>
+                <div class="card-body" style="background-color:#eeeeee">
+                    <div class="col-sm">
+                        <h3>Requests to join your teams</h3>
+                        <div class="container">
+                            <div class="row justify-content-center align-items-center h-100 pt-4">
+                                <div class="col-12 col-lg-9 col-xl-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="background-color:#bbdefb">
+                                                <th>Team Name</th>
+                                                <th>email</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for team in unresponded_requests %}
+                                            <form method="POST" action="/teams">
+                                            <tr>
+                                                <td>{{ team.name }}</td>
+                                                <td>{{ team.savedEmail }}</td>
+                                                <td> 
+                                                    <input class="btn btn-success btn-sm" type="submit" value="Add Team" name ={{ team.savedEmail }}/>
+                                                    <input class="btn btn-danger btn-sm" type="submit" value="Reject Team" name = {{ team.savedEmail }}/>
+                                                </td>
+                                            </tr>
+                                            </form>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <!--div class = "collapse" id="collapseExample">
+                                        <p>
+                                          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                        </p>
+                                    </div-->
                                 </div>
-                                <div class ="mt-2">
-                                    <input class="btn btn-primary btn-sm" type="submit" value="Reject Team" name = {{ team.savedEmail }}/>
-                                </div>
                             </div>
-                        </form>
                         </div>
-                    {% endfor %}
+                    </div>
+                    <div class="col-sm p-4">
+                        <h3>Current teams</h3>
+                        <div class="container">
+                            <div class="row justify-content-center align-items-center h-100 pt-4">
+                                <div class="col-12 col-lg-9 col-xl-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="background-color:#bbdefb">
+                                                <th>Team Name</th>
+                                                <th>email</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for team in accepted %}
+                                            <form method="POST" action="/teams">
+                                            <tr>
+                                                <td>{{ team.name }}</td>
+                                                <td>{{ team.savedEmail }}</td>
+                                                <td> 
+                                                    <div class="mt-1">
+                                                        <input class="btn btn-primary btn-sm" type="submit" value="Remove Team" name = {{ team.savedEmail }}/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </form>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<section class="vh-100">
-    <h4 class="title">
-        Here are some of your current teams!
-    </h4>
-    <div class="container py-5 h-100">
-        <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-9 col-xl-12">
-                <div class = "vstack gap-3">
-                    {% for team in accepted %}
-                    <form method="POST" action="/teams">
-                        <div class="card-body p-2 p-md-5">   
-                            {{ team.name }}
-                            {{ team.savedEmail }}
-                        </div>
-                        <div>
-                            <div class ="mt-2">
-                                <input class="btn btn-primary btn-sm" type="submit" value="Remove Team" name = {{ team.savedEmail }}/>
-                            </div>
-                        </div>
-                    </form>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</div></session>
 
 <!-- <script>
     function deleteTeam(teamEmail) {

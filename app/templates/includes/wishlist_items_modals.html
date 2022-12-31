@@ -1,0 +1,85 @@
+<style>
+  .modal-content {
+    background-color: #ffffff
+  }
+</style>
+
+<!-- Coach Manage Modal -->
+<div class="modal fade" id="Modal-ManageForm-{{ item.SKU }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center" style="background-color:#eeeeee">
+        <h3 class="modal-title w-100" id="ModalLabel">
+          <!-- -->
+          Item Name
+        </h3>
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ manage_form.hidden_tag() }}
+          <h5 class="text-center">
+            {{ item.Name }}
+          </h5>
+          <br>
+          <input id="managed_item" name="managed_item" type="hidden" value="{{item.Name}}">
+          <input id="requestor" name="requestor" type="hidden" value="{{item.Requestor}}">
+          <input id="status" name="status" type="hidden" value="{{item.Status}}">
+          {{ manage_form.orderSubmit(class="btn btn-outline-info btn-block") }}
+          {{ manage_form.declineSubmit(class="btn btn-outline-danger btn-block") }}
+          {{ manage_form.fulfilSubmit(class="btn btn-outline-success btn-block") }}
+          {{ manage_form.deleteSubmit(class="btn btn-outline-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Manage Modal -->
+<div class="modal fade" id="Modal-StudentForm-{{ item.SKU }}"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center" style="background-color:#eeeeee">
+        <h3 class="modal-title w-100" id="ModalLabel">
+          <!-- -->
+          Item Name
+        </h3>
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ manage_form.hidden_tag() }}
+          <h5 class="text-center">
+            {{ item.Name }}
+          </h5>
+          <br>
+          <input id="managed_item" name="managed_item" type="hidden" value="{{item.Name}}">
+          <input id="requestor" name="requestor" type="hidden" value="{{item.Requestor}}">
+          <input id="status" name="status" type="hidden" value="{{item.Status}}">
+          {{ manage_form.cancelSubmit(class="btn btn-outline-warning btn-block") }}
+          {{ manage_form.deleteSubmit(class="btn btn-outline-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

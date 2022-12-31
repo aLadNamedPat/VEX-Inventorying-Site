@@ -18,12 +18,13 @@ class User(UserMixin, db.Model):
     confirmedRequests = db.Column(db.Boolean(False))
     team_mates = db.Column(mutable_json_type(dbtype=JSONB, nested=True))
 
-    def __init__(self, name, password, email, savedEmail, urole, inventory, received_requests, team_mates):
+    def __init__(self, name, password, email, savedEmail, urole, inventory, wishlist_requests, received_requests, team_mates):
         self.name = name
         self.password = password
         self.email = email
         self.savedEmail = savedEmail
         self.urole = urole
         self.inventory = inventory
+        self.wishlist_requests = wishlist_requests
         self.received_requests = received_requests
         self.team_mates = team_mates

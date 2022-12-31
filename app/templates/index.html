@@ -1,10 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-    Vex Inventorying Site!
-</h1>
-<h2 class="subtitle">
-    Use this site for inventorying your vex products and keeping track of what items you have / need! 
-</h2>
+
+<section class="vh-100" >
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100 pt-4">
+            <!--div class="col-12 col-lg-9 col-xl-7 justify-content-center" -->
+            <div class="col d-flex justify-content-center">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px; width:max-content;">
+                    <div class="card-header d-flex justify-content-center"><h2 class="title justify-content-center">Welcome to the Jericho High School Vex Inventorying Site!</h2></div>
+                    <div class="card-body p-4 p-md-5" style="background-color:#eeeeee">
+                        <!--h1 class="title">
+                            Welcome to the Jericho High School Vex Inventorying Site!
+                        </h1 -->
+                        <h3 class="subtitle">
+                            <p class="card-text">This site is for the Jericho High School Vex Lab to manage and track the distribution 
+                            of the Robot parts among the robot teams. You can login as Coach or Student.
+                        </P>
+                        </h3>  
+                            <h5> you are a coach, register as coach, you can then:</h5>
+                            <ul>
+                            <li >Overview all the robot parts owned by the Vex Lab</li>
+                            <li >View and approve parts applications from teams</li>
+                            <li >Track the distribution status of the parts</li>
+                            </ul>
+
+                            <h5>If you are a student, register as student, you can then:</h5>
+                            <ul>
+                            <li>View the availibity of the robot parts</li>
+                            <li>Apply for available parts</li>
+                            <li>submit wishlist for parts that is not available</li>
+                            </ul>
+                            <a href="/login" class="btn btn-primary float-right">Click To Start</a>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
