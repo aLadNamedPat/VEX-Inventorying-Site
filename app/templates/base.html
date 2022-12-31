@@ -63,9 +63,11 @@
     <!--nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">VEX SITE</a>
+        {% if current_user.is_authenticated %}
         <span class="navbar-text">
             Account role: {{ current_user.urole }} | Email: {{ current_user.email }}
         </span>
+        {% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
