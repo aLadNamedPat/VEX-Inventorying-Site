@@ -3,4 +3,4 @@ I built this VEX inventorying site for helping to organize VEX supplies for VEX 
 
 This site is mostly a prototype idea that I plan to reimplement in React when I can find the time (in time -- hopefully sometime soon!)
 
-Need to scrape data from VEX store constantly, so maybe a development of an API to do so would be helpful.
+Need to scrape data from VEX store when inventory changes, so maybe a development of an API to do so would be helpful.
