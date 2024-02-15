@@ -12,7 +12,7 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__, static_url_path='/static')
     #new mysql db
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://aPat0203:P7heVUcnr$81hG@vexinventoryserver.postgres.database.azure.com/postgres?sslmode=require'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://{password here}'
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:aPat0203@localhost/flasksql'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['SECRET_KEY'] = os.urandom(12).hex()

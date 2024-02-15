@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'vex-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD0F9E1DABB4415694B9181B5306D570 }}
+          publish-profile: ${{ insert hidden password here ;) }}
